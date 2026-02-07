@@ -79,11 +79,6 @@ Nobzo-Blog-API/
    ```
 
  - **Configure environment variables**
-   ```bash
-   cp .env.example .env
-   ```
-
-   Edit `.env` and set your values:
    ```env
    PORT=5000
    MONGODB_URI=mongodb://localhost:27017/blog-api
