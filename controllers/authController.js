@@ -1,14 +1,7 @@
 import authService from '../services/authService.js';
 
-/**
- * Controller for authentication endpoints
- * Handles HTTP requests and responses
- */
+// Register new user
 class AuthController {
-  /**
-   * Register a new user
-   * POST /api/auth/register
-   */
   async register(req, res, next) {
     try {
       const { name, email, password } = req.body;
@@ -24,10 +17,7 @@ class AuthController {
     }
   }
 
-  /**
-   * Login user
-   * POST /api/auth/login
-   */
+  // Login user
   async login(req, res, next) {
     try {
       const { email, password } = req.body;

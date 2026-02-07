@@ -1,7 +1,3 @@
-/**
- * Custom error class for application errors
- * Extends Error to include statusCode and operational flag
- */
 export class AppError extends Error {
   constructor(message, statusCode) {
     super(message);
@@ -13,9 +9,7 @@ export class AppError extends Error {
   }
 }
 
-/**
- * Validation error class
- */
+// Validation error class
 export class ValidationError extends AppError {
   constructor(message) {
     super(message, 400);
@@ -23,9 +17,7 @@ export class ValidationError extends AppError {
   }
 }
 
-/**
- * Authentication error class
- */
+// Authentication error class
 export class AuthenticationError extends AppError {
   constructor(message = 'Authentication failed') {
     super(message, 401);
@@ -33,9 +25,7 @@ export class AuthenticationError extends AppError {
   }
 }
 
-/**
- * Authorization error class
- */
+// Authorization error class
 export class AuthorizationError extends AppError {
   constructor(message = 'You do not have permission to perform this action') {
     super(message, 403);
@@ -43,9 +33,7 @@ export class AuthorizationError extends AppError {
   }
 }
 
-/**
- * Not found error class
- */
+// Not found error class
 export class NotFoundError extends AppError {
   constructor(message = 'Resource not found') {
     super(message, 404);
@@ -53,9 +41,7 @@ export class NotFoundError extends AppError {
   }
 }
 
-/**
- * Conflict error class
- */
+// Conflict error class
 export class ConflictError extends AppError {
   constructor(message = 'Resource conflict') {
     super(message, 409);

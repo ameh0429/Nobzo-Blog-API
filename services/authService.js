@@ -6,16 +6,9 @@ import {
   ValidationError,
 } from '../utils/errors.js';
 
-/**
- * Service class for authentication operations
- * Separates business logic from controllers
- */
 class AuthService {
-  /**
-   * Register a new user
-   * @param {Object} userData - User registration data
-   * @returns {Promise<Object>} - Created user and token
-   */
+
+  // Register a new user
   async register({ name, email, password }) {
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -45,11 +38,7 @@ class AuthService {
     };
   }
 
-  /**
-   * Login user
-   * @param {Object} credentials - User login credentials
-   * @returns {Promise<Object>} - User and token
-   */
+  // Login user
   async login({ email, password }) {
     // Find user with password field
     const user = await User.findOne({ email }).select('+password');

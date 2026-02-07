@@ -1,10 +1,7 @@
 import { body, param, query, validationResult } from 'express-validator';
 import { ValidationError } from '../utils/errors.js';
 
-/**
- * Middleware to check validation results
- * Throws ValidationError if validation fails
- */
+// Middleware to check validation results
 export const validate = (req, res, next) => {
   const errors = validationResult(req);
 
@@ -19,9 +16,7 @@ export const validate = (req, res, next) => {
   next();
 };
 
-/**
- * Validation rules for user registration
- */
+// Validation rules for user registration
 export const registerValidation = [
   body('name')
     .trim()
@@ -47,9 +42,7 @@ export const registerValidation = [
   validate,
 ];
 
-/**
- * Validation rules for user login
- */
+// Validation rules for user login
 export const loginValidation = [
   body('email')
     .trim()
@@ -64,9 +57,7 @@ export const loginValidation = [
   validate,
 ];
 
-/**
- * Validation rules for creating a post
- */
+// Validation rules for creating a post
 export const createPostValidation = [
   body('title')
     .trim()
@@ -101,9 +92,7 @@ export const createPostValidation = [
   validate,
 ];
 
-/**
- * Validation rules for updating a post
- */
+// Validation rules for updating a post
 export const updatePostValidation = [
   param('id').isMongoId().withMessage('Invalid post ID'),
 
@@ -138,9 +127,7 @@ export const updatePostValidation = [
   validate,
 ];
 
-/**
- * Validation rules for getting posts with filters
- */
+// Validation rules for getting posts with filters
 export const getPostsValidation = [
   query('page')
     .optional()
@@ -166,9 +153,7 @@ export const getPostsValidation = [
   validate,
 ];
 
-/**
- * Validation rules for getting a single post by slug
- */
+// Validation rules for getting a single post by slug
 export const getPostBySlugValidation = [
   param('slug')
     .trim()
@@ -180,9 +165,7 @@ export const getPostBySlugValidation = [
   validate,
 ];
 
-/**
- * Validation rules for post ID parameter
- */
+// Validation rules for post ID parameter
 export const postIdValidation = [
   param('id').isMongoId().withMessage('Invalid post ID'),
 

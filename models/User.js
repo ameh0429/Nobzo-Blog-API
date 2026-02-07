@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Password is required'],
       minlength: [6, 'Password must be at least 6 characters'],
-      select: false, // Don't return password by default in queries
+      select: false,
     },
   },
   {
@@ -33,39 +33,27 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// Index for faster email lookups
-// userSchema.index({ email: 1 });
-
-/**
- * Hash password before saving
- * Only hash if password is new or modified
- */
+// Hash password before saving
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
-    return next();
+    return;
   }
 
   try {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
-    next();
+    // next();
   } catch (error) {
-    next(error);
+    throw error;
   }
 });
 
-/**
- * Method to compare password for login
- * @param {string} candidatePassword - Password to check
- * @returns {Promise<boolean>} - True if password matches
- */
+// Method to compare password for login
 userSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
-/**
- * Remove password from JSON response
- */
+// Remove password from JSON response
 userSchema.methods.toJSON = function () {
   const user = this.toObject();
   delete user.password;

@@ -2,16 +2,13 @@ import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/database.js';
 import authRoutes from './routes/authRoutes.js';
-// import postRoutes from './routes/postRoutes.js';
+import postRoutes from './routes/postRoutes.js';
 import errorHandler, { notFound } from './middleware/errorHandler.js';
 
 const app = express();
 
 // Load environment variables
 dotenv.config();
-
-// // Connect to database
-// connectDB();
 
 // Body parser middleware
 app.use(express.json());
@@ -28,12 +25,12 @@ app.get('/health', (req, res) => {
 
 // API routes
 app.use('/api/auth', authRoutes);
-// app.use('/api/posts', postRoutes);
+app.use('/api/posts', postRoutes);
 
-// 404 handler - must be after all routes
+// 404 handler
 app.use(notFound);
 
-// Global error handler - must be last
+// Global error handler
 app.use(errorHandler);
 
 // Validate required environment variables
@@ -45,15 +42,11 @@ if (missingEnvVars.length > 0) {
   process.exit(1);
 }
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
-/**
- * Start server
- * Connects to database first, then starts listening
- */
+// Connect to database
 const startServer = async () => {
   try {
-    // Connect to database
     await connectDB();
 
     // Start Express server

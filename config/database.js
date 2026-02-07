@@ -1,20 +1,15 @@
 import mongoose from 'mongoose';
 
-/**
- * Connect to MongoDB database
- * Implements connection pooling and error handling
- */
+// Connect to MongoDB database
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGODB_URI, {
-      // These options are now default in Mongoose 6+, but including for clarity
       maxPoolSize: 10,
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
     });
 
-    // console.log(`MongoDB Connected: ${conn.connection.host}`);
-    console.log("MongoDB Connected");
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
 
     // Handle connection events
     mongoose.connection.on('error', (err) => {

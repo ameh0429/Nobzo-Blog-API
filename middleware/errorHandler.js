@@ -1,16 +1,12 @@
 import { AppError } from '../utils/errors.js';
 
-/**
- * Handle Mongoose CastError (invalid ObjectId)
- */
+// Handle Mongoose CastError (invalid ObjectId)
 const handleCastError = (err) => {
   const message = `Invalid ${err.path}: ${err.value}`;
   return new AppError(message, 400);
 };
 
-/**
- * Handle Mongoose duplicate key error
- */
+// Handle Mongoose duplicate key error
 const handleDuplicateError = (err) => {
   const field = Object.keys(err.keyValue)[0];
   const value = err.keyValue[field];
@@ -18,18 +14,14 @@ const handleDuplicateError = (err) => {
   return new AppError(message, 409);
 };
 
-/**
- * Handle Mongoose validation error
- */
+// Handle Mongoose validation error
 const handleValidationError = (err) => {
   const errors = Object.values(err.errors).map((el) => el.message);
   const message = `Invalid input data. ${errors.join('. ')}`;
   return new AppError(message, 400);
 };
 
-/**
- * Send error response in development
- */
+// Send error response in development
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode).json({
     status: err.status,
@@ -39,20 +31,16 @@ const sendErrorDev = (err, res) => {
   });
 };
 
-/**
- * Send error response in production
- */
+// Send error response in production
 const sendErrorProd = (err, res) => {
-  // Operational, trusted error: send message to client
   if (err.isOperational) {
     res.status(err.statusCode).json({
       status: err.status,
       message: err.message,
     });
   }
-  // Programming or unknown error: don't leak error details
   else {
-    console.error('ERROR 💥', err);
+    console.error('ERROR', err);
 
     res.status(500).json({
       status: 'error',
@@ -61,10 +49,7 @@ const sendErrorProd = (err, res) => {
   }
 };
 
-/**
- * Global error handling middleware
- * Centralizes all error handling and formatting
- */
+// Global error handling middleware
 const errorHandler = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
@@ -85,9 +70,7 @@ const errorHandler = (err, req, res, next) => {
   }
 };
 
-/**
- * Catch 404 errors - route not found
- */
+// Catch 404 errors - route not found
 export const notFound = (req, res, next) => {
   const err = new AppError(`Route ${req.originalUrl} not found`, 404);
   next(err);
